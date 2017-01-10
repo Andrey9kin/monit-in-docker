@@ -1,0 +1,10 @@
+version: "2"
+
+services:
+  monit:
+    restart: always
+    pid: host
+    network_mode: host
+    ports:
+      - 2812:2812
+    build: .
