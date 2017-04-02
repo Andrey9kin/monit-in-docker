@@ -18,3 +18,5 @@ services:
         - http_proxy
         - https_proxy
         - no_proxy
+    volumes:
+      - ${PWD}/cfg:/monit-cfg
