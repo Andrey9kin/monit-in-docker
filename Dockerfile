@@ -1,14 +1,6 @@
-FROM alpine:3.5
+FROM andrey9kin/base-image:1.0.0
 
-# Support for proxies.
-# Values should be passed as build args
-# http://docs.docker.com/engine/reference/builder/#arg
-ENV http_proxy ${http_proxy:-}
-ENV https_proxy ${https_proxy:-}
-ENV no_proxy ${no_proxy:-}
-
-RUN apk add -U monit \
-    && rm -rf /var/cache/apk/*
+RUN apk add --no-cache monit==5.20.0-r0
 
 COPY conf.d /etc/monit/conf.d
 COPY monitrc /etc/
@@ -18,4 +10,4 @@ RUN chmod 600 /etc/monitrc \
 
 EXPOSE 2812
 
-CMD ["monit", "-Ic", "/etc/monitrc"]
+CMD ["dumb-init", "--", "monit", "-Ic", "/etc/monitrc"]
